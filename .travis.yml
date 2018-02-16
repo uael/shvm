@@ -1,0 +1,7 @@
+sudo: false
+language: c
+dist: trusty
+os: osx
+script:
+  - make
+  - make test
