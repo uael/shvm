@@ -33,10 +33,11 @@ LIB_NAME = $(LIBS)
 endif
 3TH_NAME =
 SRC_NAME = \
-	bi.c \
+	bi.c bi/bg.c bi/env.c bi/export.c bi/fg.c bi/jobs.c bi/setenv.c bi/unset.c \
+	bi/unsetenv.c \
 	env.c \
-	job.c \
-	op.c \
+	job.c job/completed.c job/cont.c job/mark.c job/stopped.c job/wait \
+	op.c op/exec.c op/fork.c op/jump.c op/pipe.c op/term.c op/wait.c op/word.c \
 	proc.c \
 	var.c \
 	vm.c
