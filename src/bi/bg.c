@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shvm/bi.h                                          :+:      :+:    :+:   */
+/*   bi/bg.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHVM_BI_H
-# define SHVM_BI_H
+#include "shvm/bi.h"
+#include "shvm/vm.h"
 
-# include <libft.h>
+inline int	shvm_bibg(int ac, char **av, char **env)
+{
+	ssize_t	i;
+	t_job	*job;
 
-typedef int		(t_bi)(int ac, char *av[], char *ev[]);
-
-extern void		shvm_biregister(char const *name, t_bi *bi);
-
-extern int		shvm_bibg(int ac, char **av, char **env);
-extern int		shvm_bifg(int ac, char **av, char **env);
-extern int		shvm_bijobs(int ac, char **av, char **env);
-
-extern int		shvm_biunsetenv(int ac, char **av, char **env);
-extern int		shvm_bienv(int ac, char **av, char **env);
-extern int		shvm_bisetenv(int ac, char **av, char **env);
-extern int		shvm_biunset(int ac, char **av);
-extern int		shvm_biexport(int ac, char **av, char **env);
-
-#endif
+	(void)env;
+	if (!(i = g_shvm->bc))
+		return (ft_retf(EXIT_FAILURE, "bg: no current job\n"));
+	if (ac != 1)
+	{
+		while (*++av)
+			if (ft_strlen(*av) != ft_intlen(i = ft_atoi(*av), 10) ||
+				!(job = shvm_jobget((uint8_t)i)) || shvm_jobstopped(job))
+				ft_putf(STDERR_FILENO, "bg: %s: job not found\n", *av);
+			else
+				shvm_jobcont(shvm_jobget((uint8_t)i), 0);
+		return (EXIT_SUCCESS);
+	}
+	else
+		while (--i >= 0)
+			if (shvm_jobstopped(job = shvm_jobget((uint8_t)i)))
+			{
+				shvm_jobcont(job, 0);
+				return (EXIT_SUCCESS);
+			}
+	return (ft_retf(EXIT_FAILURE, "bg: bg current job\n"));
+}

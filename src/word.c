@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shvm/var.h                                         :+:      :+:    :+:   */
+/*   word.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 09:52:30 by cmalfroy          #+#    #+#             */
-/*   Updated: 2017/12/06 12:00:10 by alucas-          ###   ########.fr       */
+/*   Created: 2017/11/07 09:52:30 by alucas-           #+#    #+#             */
+/*   Updated: 2017/12/13 08:28:05 by alucas-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHVM_VAR_H
-# define SHVM_VAR_H
+#include "shvm/word.h"
 
-# include <libft.h>
-
-extern char		*shvm_varget(char const *var, char **ev);
-extern void		shvm_varset(char const *var, char const *val);
-extern t_bool	shvm_varunset(char const *var);
-extern int		shvm_vardump(int fd, char **ev);
-
-#endif
+extern size_t	shvm_wordexp(t_sds *dst, char const *src, size_t n, uint8_t *f);
+extern t_bool	shvm_wordisvar(char const *word, size_t len);

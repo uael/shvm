@@ -12,4 +12,7 @@
 
 #include "shvm/vm.h"
 
-
+extern void		shvm_ctor(int fd, char *ev);
+extern void		shvm_dtor(void);
+extern int		shvm_reset(void);
+extern int		shvm_eval(char *line);

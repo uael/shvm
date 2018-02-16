@@ -11,5 +11,15 @@
 /* ************************************************************************** */
 
 #include "shvm/bi.h"
+#include "shvm/vm.h"
 
+inline void		shvm_biregister(char const *name, t_bi *bi)
+{
+	uint32_t	it;
+	char		*var;
 
+	if (ft_mapput(&g_shvm->builtins, var = ft_strdup(name), &it))
+		((t_bi **)g_shvm->builtins.vals)[it] = bi;
+	else
+		free(var);
+}

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shvm/bi.h                                          :+:      :+:    :+:   */
+/*   ush/env.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHVM_BI_H
-# define SHVM_BI_H
+#include "shvm/bi.h"
+#include "shvm/vm.h"
 
-# include <libft.h>
+#define FG "fg: "
 
-typedef int		(t_bi)(int ac, char *av[], char *ev[]);
+static void	fg(uint8_t idx)
+{
+	t_job	*job;
 
-extern void		shvm_biregister(char const *name, t_bi *bi);
+	if (!shvm_jobrem(idx, job = alloca(sizeof(t_job))))
+		return ;
+	if (shvm_jobstopped(job))
+		shvm_jobcont(job, 1);
+	else
+	{
+		//TODO
+	}
+}
 
-extern int		shvm_bibg(int ac, char **av, char **env);
-extern int		shvm_bifg(int ac, char **av, char **env);
-extern int		shvm_bijobs(int ac, char **av, char **env);
+inline int	shvm_bifg(int ac, char **av, char **env)
+{
+	ssize_t	i;
 
-extern int		shvm_biunsetenv(int ac, char **av, char **env);
-extern int		shvm_bienv(int ac, char **av, char **env);
-extern int		shvm_bisetenv(int ac, char **av, char **env);
-extern int		shvm_biunset(int ac, char **av);
-extern int		shvm_biexport(int ac, char **av, char **env);
-
-#endif
+	(void)env;
+	if (!g_shvm->bc)
+		return (ft_retf(EXIT_FAILURE, FG"no current job\n"));
+	if (ac != 1)
+		while (*++av)
+		{
+			i = ft_atoi(*av);
+			if (ft_strlen(*av) != ft_intlen(i, 10) || (size_t)i >= g_shvm->bc)
+				ft_putf(STDERR_FILENO, FG"%s: job not found\n", *av);
+			else
+				fg((uint8_t)i);
+		}
+	else
+		fg((uint8_t)(g_shvm->bc - 1));
+	return (EXIT_SUCCESS);
+}

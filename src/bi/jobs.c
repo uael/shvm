@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shvm/bi.h                                          :+:      :+:    :+:   */
+/*   ush/env.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHVM_BI_H
-# define SHVM_BI_H
+#include "shvm/bi.h"
 
-# include <libft.h>
+inline int	shvm_bijobs(int ac, char **av, char **env)
+{
+	//TODO
 
-typedef int		(t_bi)(int ac, char *av[], char *ev[]);
-
-extern void		shvm_biregister(char const *name, t_bi *bi);
-
-extern int		shvm_bibg(int ac, char **av, char **env);
-extern int		shvm_bifg(int ac, char **av, char **env);
-extern int		shvm_bijobs(int ac, char **av, char **env);
-
-extern int		shvm_biunsetenv(int ac, char **av, char **env);
-extern int		shvm_bienv(int ac, char **av, char **env);
-extern int		shvm_bisetenv(int ac, char **av, char **env);
-extern int		shvm_biunset(int ac, char **av);
-extern int		shvm_biexport(int ac, char **av, char **env);
-
-#endif
+	(void)ac;
+	(void)av;
+	(void)env;
+	return (EXIT_SUCCESS);
+}

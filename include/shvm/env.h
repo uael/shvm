@@ -15,6 +15,9 @@
 
 # include <libft.h>
 
-
+extern char		*shvm_envget(char const *var);
+extern void		shvm_envset(char const *var, char const *val);
+extern t_bool	shvm_envunset(char const *var);
+extern void		shvm_envdump(int fd);
 
 #endif

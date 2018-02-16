@@ -12,4 +12,7 @@
 
 #include "shvm/var.h"
 
-
+extern char		*shvm_varget(char const *var, char **ev);
+extern void		shvm_varset(char const *var, char const *val);
+extern t_bool	shvm_varunset(char const *var);
+extern int		shvm_vardump(int fd, char **ev);

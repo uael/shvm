@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shvm/bi.h                                          :+:      :+:    :+:   */
+/*   ush/env.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHVM_BI_H
-# define SHVM_BI_H
+#include "shvm/bi.h"
+#include "shvm/env.h"
 
-# include <libft.h>
+#define N_UNSETENV "unsetenv: "
 
-typedef int		(t_bi)(int ac, char *av[], char *ev[]);
+inline int	shvm_biunsetenv(int ac, char **av, char **env)
+{
+	int i;
+	int fst;
 
-extern void		shvm_biregister(char const *name, t_bi *bi);
-
-extern int		shvm_bibg(int ac, char **av, char **env);
-extern int		shvm_bifg(int ac, char **av, char **env);
-extern int		shvm_bijobs(int ac, char **av, char **env);
-
-extern int		shvm_biunsetenv(int ac, char **av, char **env);
-extern int		shvm_bienv(int ac, char **av, char **env);
-extern int		shvm_bisetenv(int ac, char **av, char **env);
-extern int		shvm_biunset(int ac, char **av);
-extern int		shvm_biexport(int ac, char **av, char **env);
-
-#endif
+	(void)env;
+	if (ac < 2)
+		return (ft_retf(NOP, N_UNSETENV"%e\n", EINVAL));
+	i = 0;
+	fst = YEP;
+	while (++i < ac)
+		if (ft_strchr(av[i], '='))
+			return (ft_retf(NOP, N_UNSETENV"%s\n", "Syntax error"));
+		else if (!shvm_envunset(av[i]))
+			ft_retf((fst = NOP), N_UNSETENV"%s: Environ not fount\n",
+				av[i]);
+	return (fst);
+}

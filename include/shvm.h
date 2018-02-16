@@ -20,5 +20,6 @@
 # include "shvm/proc.h"
 # include "shvm/var.h"
 # include "shvm/vm.h"
+# include "shvm/word.h"
 
 #endif

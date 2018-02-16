@@ -12,4 +12,6 @@
 
 #include "shvm/job.h"
 
-
+extern void		shvm_jobctor(t_job *job);
+extern t_job	*shvm_jobget(uint8_t idx);
+extern t_bool	shvm_jobrem(uint8_t idx, t_job *out);
