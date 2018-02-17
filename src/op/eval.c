@@ -13,7 +13,7 @@
 #include "shvm/op.h"
 
 #ifndef NDEBUG
-static char		*opn[] = {
+static char	*opn[] = {
 	[OP_EXEC] = "OP_EXEC",
 	[OP_WORD] = "OP_WORD",
 	[OP_TERM] = "OP_TERM",
@@ -24,7 +24,7 @@ static char		*opn[] = {
 };
 #endif
 
-int	shvm_opeval(t_op *op, char *ln)
+int			shvm_opeval(t_op *op, char *ln)
 {
 	static t_opc	*opc[] = {
 		[OP_EXEC] = shvm_opexec,
