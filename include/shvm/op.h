@@ -15,23 +15,21 @@
 
 # include "ctx.h"
 
-# define OP_LOCK (1 << 1)
-# define OP_FJMP (1 << 2)
-# define OP_INIT (1 << 3)
-# define OP_BACK (1 << 4)
+# define OPF_FULL (1 << 1)
+# define OPF_PIPE (1 << 2)
+# define OPF_LOCK (1 << 3)
 
 enum e_opcode
 {
-	OP_BIN = 0,
-	OP_WORD,
-	OP_JUMP,
-	OP_TERM,
-	OP_WAIT,
-	OP_PIPEB,
-	OP_PIPEI,
-	OP_PIPEE,
+	OP_CLR,
+	OP_BIN,
 	OP_FORK,
-	OP_CCLR,
+	OP_WORD,
+	OP_EXEC,
+	OP_WAIT,
+	OP_COMP,
+	OP_GOTO,
+	OP_TERM
 };
 
 typedef struct	s_op
@@ -50,15 +48,6 @@ extern t_op		*shvm_opput(uint16_t it);
 extern t_op		*shvm_opat(uint16_t it);
 
 extern int		shvm_opeval(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_opcclr(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_opbin(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_opword(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_opjump(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_opterm(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_opwait(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_oppipeb(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_oppipei(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_oppipee(t_op *op, t_ctx *ctx, char *ln);
-extern int		shvm_opfork(t_op *op, t_ctx *ctx, char *ln);
+
 
 #endif

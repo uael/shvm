@@ -18,7 +18,7 @@
 typedef struct	s_scope
 {
 	int			ac;
-	char		*av[];
+	char		**av;
 	int			status;
 	pid_t		pid;
 	t_bool		tty;
