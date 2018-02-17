@@ -11,6 +11,27 @@
 /* ************************************************************************** */
 
 #include "shvm/env.h"
+#include "shvm/vm.h"
+
+extern void		shvm_envctor(char *ev[])
+{
+	ssize_t	i;
+	t_bool	hasp;
+
+	i = -1;
+	hasp = 0;
+	if (ev)
+		while (ev[++i])
+		{
+			*(char **)ft_vecpush(&g_shvm->env) = ft_strdup(ev[i]);
+			if (ft_strbegw("PATH", ev[i]) && ev[i][4] == '=')
+				hasp = 1;
+		}
+	if (!hasp)
+		*(char **)ft_vecpush(&g_shvm->env) = ft_strdup(PATH_DFL);
+	*(char **)ft_vecpush(&g_shvm->env) = NULL;
+	--g_shvm->env.len;
+}
 
 extern char		*shvm_envget(char const *var);
 extern void		shvm_envset(char const *var, char const *val);

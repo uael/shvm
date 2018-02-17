@@ -13,10 +13,15 @@
 #ifndef SHVM_VM_H
 # define SHVM_VM_H
 
+# include <term.h>
+
 # include "job.h"
 # include "op.h"
 # include "proc.h"
 
+# ifndef TTY
+#  define TTY struct termios
+# endif
 # ifndef CHILD_MAX
 #  define CH_MAX 266
 # else
@@ -32,10 +37,14 @@
 
 typedef struct	s_shvm
 {
-	uint8_t		status;
+	TTY			tcmode;
+	pid_t		pid;
+	t_scope		scope[CH_MAX];
+	uint8_t		sc;
 	t_map		binaries;
 	t_map		builtins;
 	t_map		locals;
+	t_map		aliases;
 	t_vec		env;
 	char		*av[AV_MAX];
 	uint16_t	ac;
@@ -50,9 +59,9 @@ typedef struct	s_shvm
 
 extern t_shvm	*g_shvm;
 
-extern void		shvm_ctor(int fd, char *ev);
+extern void		shvm_ctor(int fd, int ac, char *av[], char *ev[]);
 extern void		shvm_dtor(void);
-extern int		shvm_reset(void);
+extern void		shvm_reset(void);
 extern int		shvm_eval(char *line);
 
 #endif

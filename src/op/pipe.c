@@ -12,4 +12,4 @@
 
 #include "shvm/op.h"
 
-extern int		shmv_oppipe(t_op *op, char *ln);
+extern int		shvm_oppipe(t_op *op, char *ln);

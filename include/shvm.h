@@ -18,6 +18,7 @@
 # include "shvm/job.h"
 # include "shvm/op.h"
 # include "shvm/proc.h"
+# include "shvm/scope.h"
 # include "shvm/var.h"
 # include "shvm/vm.h"
 # include "shvm/word.h"

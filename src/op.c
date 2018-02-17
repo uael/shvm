@@ -14,5 +14,3 @@
 
 extern t_op		*shvm_oppush(uint16_t *it);
 extern t_op		*shvm_opat(uint16_t it);
-extern t_op		*shvm_opjump(uint16_t it, uint16_t jump);
-extern t_op		*shvm_opor(uint16_t it, uint16_t flag);

@@ -12,4 +12,4 @@
 
 #include "shvm/op.h"
 
-extern int		shmv_opwait(t_op *op, char *ln);
+extern int		shvm_opwait(t_op *op, char *ln);
