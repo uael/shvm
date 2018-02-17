@@ -50,7 +50,7 @@ typedef struct	s_map
 
 extern void		ft_mapctor(t_map *map, t_hasher hasher, size_t ksz, size_t vsz);
 extern void		ft_mapdtor(t_map *map, t_dtor kdtor, t_dtor vdtor);
-extern void		ft_mapclr(t_map *map);
+extern void		ft_mapclr(t_map *map, t_dtor kdtor, t_dtor vdtor);
 extern t_bool	ft_mapget(t_map *map, void *key, uint32_t *out);
 extern t_bool	ft_mapput(t_map *map, void *key, uint32_t *out);
 extern t_bool	ft_mapdel(t_map *map, uint32_t it);

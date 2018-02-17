@@ -15,6 +15,7 @@
 
 # include "shvm/bi.h"
 # include "shvm/env.h"
+# include "shvm/exe.h"
 # include "shvm/job.h"
 # include "shvm/op.h"
 # include "shvm/proc.h"

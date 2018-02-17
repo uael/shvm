@@ -13,12 +13,12 @@
 #ifndef LIBFT_EX_H
 # define LIBFT_EX_H
 
-# ifdef DEBUG
-#  define THROW(RCODE) ft_ex_throw(RCODE, __FUNCTION__, __LINE__)
-#  define ENO_THROW(RCODE, ENO) ft_eno_throw(RCODE, ENO, __FUNCTION__, __LINE__)
-# else
+# ifdef NDEBUG
 #  define THROW(RCODE) ft_ex_throw(RCODE, NULL, 0)
 #  define ENO_THROW(RCODE, ENO) ft_eno_throw(RCODE, ENO, NULL, 0)
+# else
+#  define THROW(RCODE) ft_ex_throw(RCODE, __FUNCTION__, __LINE__)
+#  define ENO_THROW(RCODE, ENO) ft_eno_throw(RCODE, ENO, __FUNCTION__, __LINE__)
 # endif
 
 # define EXALL 0

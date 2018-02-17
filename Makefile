@@ -12,8 +12,8 @@
 
 NAME ?= libshvm
 CFLAGS += -Werror -Wextra -Wall
-RCFLAGS = -O2 -fomit-frame-pointer
-DCFLAGS = -g3 -DDEBUG
+RCFLAGS = -O2 -fomit-frame-pointer -DNDEBUG
+DCFLAGS = -g3
 SCFLAGS = $(DCFLAGS) -fsanitize=address,undefined -ferror-limit=5
 CC ?= gcc
 

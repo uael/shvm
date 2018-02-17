@@ -11,5 +11,11 @@
 /* ************************************************************************** */
 
 #include "shvm/op.h"
+#include "shvm/vm.h"
 
-extern int		shvm_opjump(t_op *op, char *ln);
+extern int		shvm_opjump(t_op *op, t_ctx *ctx, char *ln)
+{
+	if ((op->flags & OP_FJMP) || !g_shvm->scope[g_shvm->sc].status)
+		return (shvm_opeval(g_shvm->op + op->jump, ctx, ln));
+	return (shvm_opeval(++op, ctx, ln));
+}

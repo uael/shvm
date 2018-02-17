@@ -12,4 +12,7 @@
 
 #include "shvm/op.h"
 
-extern int		shvm_opfork(t_op *op, char *ln);
+int	shvm_opfork(t_op *op, t_ctx *ctx, char *ln)
+{
+
+}

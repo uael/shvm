@@ -12,4 +12,4 @@
 
 #include "shvm/op.h"
 
-extern int		shvm_opterm(t_op *op, char *ln);
+extern int		shvm_opterm(t_op *op, t_ctx *ctx, char *ln);

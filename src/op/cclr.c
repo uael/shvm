@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op/exec.h                                          :+:      :+:    :+:   */
+/*   op/cclr.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alucas- <alucas-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,4 +12,8 @@
 
 #include "shvm/op.h"
 
-extern int		shvm_opexec(t_op *op, char *ln);
+int	shvm_opcclr(t_op *op, t_ctx *ctx, char *ln)
+{
+	shvm_ctxreset(ctx);
+	return (shvm_opeval(++op, ctx, ln));
+}

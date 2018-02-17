@@ -15,7 +15,8 @@
 
 # include <libft.h>
 
-extern size_t	shvm_wordexp(t_sds *dst, char const *src, size_t n, uint8_t *f);
+extern size_t	shvm_wordres(t_sds *dst, char const *src, size_t n, uint8_t *f);
+extern void		shvm_wordexp(uint16_t *ac, char *av[], char const *s, size_t n);
 extern t_bool	shvm_wordisvar(char const *word, size_t len);
 
 #endif

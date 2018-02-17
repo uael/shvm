@@ -25,20 +25,49 @@ inline void	ft_deqclr(t_deq *self, t_dtor idtor)
 	}
 }
 
-inline void	ft_mapclr(t_map *self)
+inline void	ft_mapclr(t_map *self, t_dtor kdtor, t_dtor vdtor)
 {
+	uint32_t it;
+
 	if (self->bucks)
 	{
+		if (kdtor || vdtor)
+		{
+			it = 0;
+			while (it < self->cap)
+			{
+				if (BUCKET_ISPOPULATED(self->bucks, it))
+				{
+					if (kdtor)
+						kdtor(self->keys + (it * self->ksz));
+					if (vdtor)
+						vdtor(self->vals + (it * self->vsz));
+				}
+				++it;
+			}
+		}
 		ft_memset(self->bucks, BUCKET_EMPTY, self->cap);
 		self->len = 0;
 		self->occupieds = 0;
 	}
 }
 
-inline void	ft_setclr(t_set *self)
+inline void	ft_setclr(t_set *self, t_dtor kdtor)
 {
+	uint32_t it;
+
 	if (self->bucks)
 	{
+		if (kdtor)
+		{
+			it = 0;
+			while (it < self->cap)
+			{
+				if (BUCKET_ISPOPULATED(self->bucks, it))
+					kdtor(self->keys + (it * self->ksz));
+				++it;
+			}
+		}
 		ft_memset(self->bucks, BUCKET_EMPTY, self->cap);
 		self->len = 0;
 		self->occupieds = 0;

@@ -49,7 +49,6 @@ void			shvm_dtor(void)
 {
 	while (g_shvm->bc)
 		shvm_jobkill(shvm_jobget(--g_shvm->bc));
-	shvm_reset();
 	ft_vecdtor(&g_shvm->env, (t_dtor)ft_pfree);
 	ft_mapdtor(&g_shvm->builtins, (t_dtor)ft_pfree, NULL);
 	ft_mapdtor(&g_shvm->binaries, (t_dtor)ft_pfree, (t_dtor)ft_pfree);
@@ -59,8 +58,6 @@ void			shvm_dtor(void)
 
 void			shvm_reset(void)
 {
-	while (g_shvm->ac)
-		ft_pfree((void **)g_shvm->av + --g_shvm->ac);
 	if (g_shvm->oc)
 	{
 		ft_bzero(g_shvm->op, g_shvm->oc * sizeof(t_op));
@@ -70,6 +67,12 @@ void			shvm_reset(void)
 
 int				shvm_eval(char *line)
 {
-	shvm_reset();
-	return (shvm_opeval(g_shvm->op, line));
+	int		st;
+	t_ctx	ctx;
+
+	shvm_ctxctor(&ctx);
+	g_shvm->ctx = &ctx;
+	st = shvm_opeval(g_shvm->op, &ctx, line);
+	shvm_ctxdtor(&ctx);
+	return (st);
 }
