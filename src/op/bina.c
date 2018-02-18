@@ -30,12 +30,15 @@ static int	binnotfound(int ac, char **av, char **ev)
 	return (g_shvm->ctx->scope->status);
 }
 
-static int	binfail(t_op *op, t_ctx *ctx, char *ln, int st)
+static int	binnext(t_op *op, t_ctx *ctx, char *ln, int st)
 {
 	while (ctx->ac)
 		ft_pfree((void **)ctx->av + --ctx->ac);
 	ctx->scope->status = st;
-	return (shvm_opeval(g_shvm->op + op->jump, ctx, ln));
+	++op;
+	while (!OP_ISTERM(op->kind))
+		++op;
+	return (shvm_opeval(op, ctx, ln));
 }
 
 static int 	binpredef(t_op *op, t_ctx *ctx, char *ln)
@@ -45,9 +48,9 @@ static int 	binpredef(t_op *op, t_ctx *ctx, char *ln)
 	char		buf[PATH_MAX + 1];
 
 	if (!ft_strcmp(*ctx->av, "true"))
-		return (binfail(op, ctx, ln, 0));
+		return (binnext(op, ctx, ln, 0));
 	if (!ft_strcmp(*ctx->av, "fals"))
-		return (binfail(op, ctx, ln, 1));
+		return (binnext(op, ctx, ln, 1));
 	if (ft_mapget(&g_shvm->builtins, *ctx->av, &it))
 		ctx->bi = ((t_bi **)g_shvm->builtins.vals)[it];
 	else if ((st = shvm_exelookup(g_shvm->env.buf, *ctx->av, "PATH", buf)))
@@ -55,17 +58,21 @@ static int 	binpredef(t_op *op, t_ctx *ctx, char *ln)
 		ctx->bi = binnotfound;
 		ctx->bin = *ctx->av;
 		*ctx->av = NULL;
-		return (binfail(op, ctx, ln, st));
+		ctx->scope->status = st;
+		++op;
+		while (op->kind != OP_EXEC)
+			++op;
+		return (shvm_opeval(op, ctx, ln));
 	}
 	else
 		ctx->bin = ft_strdup(buf);
 	return (shvm_opeval(++op, ctx, ln));
 }
 
-int			shvm_opbin(t_op *op, t_ctx *ctx, char *ln)
+int			shvm_opbina(t_op *op, t_ctx *ctx, char *ln)
 {
 	while (!ctx->ac)
-		if ((op->flags & OP_LOCK))
+		if ((op->flags & OPF_LOCK))
 		{
 			ctx->av[ctx->ac++] = ft_strndup(ln + op->pos, op->len);
 			break ;
@@ -74,7 +81,7 @@ int			shvm_opbin(t_op *op, t_ctx *ctx, char *ln)
 		{
 			shvm_wordexp(&ctx->ac, ctx->av, ln + op->pos, op->len);
 			if (!ctx->ac && (++op)->kind != OP_WORD)
-				return (binfail(op, ctx, ln, 0));
+				return (binnext(op, ctx, ln, 0));
 		}
 	return (binpredef(op, ctx, ln));
 }

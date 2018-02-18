@@ -19,8 +19,6 @@
 
 # define AV_MAX UINT16_MAX
 
-#include <sys/syslimits.h>
-
 typedef struct	s_ctx
 {
 	t_scope		*scope;
@@ -33,10 +31,11 @@ typedef struct	s_ctx
 	t_vec		env;
 	t_map		locals;
 	uint16_t	ac;
+	t_bool		child;
 }				t_ctx;
 
 extern void		shvm_ctxctor(t_ctx *ctx);
 extern void		shvm_ctxdtor(t_ctx *ctx);
-extern void		shvm_ctxreset(t_ctx *ctx);
+extern void		shvm_ctxreset(t_ctx *ctx, t_bool full);
 
 #endif

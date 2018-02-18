@@ -31,16 +31,24 @@ void	shvm_ctxdtor(t_ctx *ctx)
 	ft_pfree((void **)ctx->bin);
 }
 
-void	shvm_ctxreset(t_ctx *ctx)
+/*
+** When full clearing the context, also reset io chain and pipe fds
+*/
+
+void	shvm_ctxreset(t_ctx *ctx, t_bool full)
 {
 	while (ctx->ac)
 		ft_pfree((void **)ctx->av + --ctx->ac);
 	ft_vecclr(&ctx->env, (t_dtor)ft_pfree);
 	ft_mapclr(&ctx->locals, (t_dtor)ft_pfree, (t_dtor)ft_pfree);
-	ft_memcpy(ctx->io, STD_FILENOS, 3 * sizeof(int));
-	ft_bzero(ctx->fds, 2 * sizeof(int));
 	ft_pfree((void **)ctx->bin);
 	ctx->scope = g_shvm->scope + g_shvm->sc;
 	ctx->bi = NULL;
 	ctx->job = NULL;
+	ctx->child = 0;
+	if (full)
+	{
+		ft_memcpy(ctx->io, STD_FILENOS, 3 * sizeof(int));
+		ft_bzero(ctx->fds, 2 * sizeof(int));
+	}
 }

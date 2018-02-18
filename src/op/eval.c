@@ -16,29 +16,27 @@
 #ifndef NDEBUG
 #include <stdio.h>
 static char		*g_opn[] = {
-	[OP_BIN] = "OP_BIN",
-	[OP_WORD] = "OP_WORD",
-	[OP_TERM] = "OP_TERM",
-	[OP_JUMP] = "OP_JUMP",
-	[OP_WAIT] = "OP_WAIT",
-	[OP_PIPEB] = "OP_PIPEB",
-	[OP_PIPEI] = "OP_PIPEI",
-	[OP_PIPEE] = "OP_PIPEE",
+	[OP_INIT] = "OP_INIT",
+	[OP_BINA] = "OP_BINA",
 	[OP_FORK] = "OP_FORK",
-	[OP_CCLR] = "OP_CCLR",
+	[OP_WORD] = "OP_WORD",
+	[OP_EXEC] = "OP_EXEC",
+	[OP_WAIT] = "OP_WAIT",
+	[OP_COMP] = "OP_COMP",
+	[OP_GOTO] = "OP_GOTO",
+	[OP_TERM] = "OP_TERM"
 };
 #endif
 static t_opc	*g_opc[] = {
-	[OP_BIN] = shvm_opbin,
-	[OP_WORD] = shvm_opword,
-	[OP_TERM] = shvm_opterm,
-	[OP_JUMP] = shvm_opjump,
-	[OP_WAIT] = shvm_opwait,
-	[OP_PIPEB] = shvm_oppipeb,
-	[OP_PIPEI] = shvm_oppipei,
-	[OP_PIPEE] = shvm_oppipee,
+	[OP_INIT] = shvm_opinit,
+	[OP_BINA] = shvm_opbina,
 	[OP_FORK] = shvm_opfork,
-	[OP_CCLR] = shvm_opcclr,
+	[OP_WORD] = shvm_opword,
+	[OP_EXEC] = shvm_opexec,
+	[OP_WAIT] = shvm_opwait,
+	[OP_COMP] = shvm_opcomp,
+	[OP_GOTO] = shvm_opgoto,
+	[OP_TERM] = shvm_opterm
 };
 
 int				shvm_opeval(t_op *op, t_ctx *ctx, char *ln)

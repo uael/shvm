@@ -15,7 +15,7 @@
 
 int	shvm_opword(t_op *op, t_ctx *ctx, char *ln)
 {
-	if ((op->flags & OP_LOCK))
+	if ((op->flags & OPF_LOCK))
 		ctx->av[ctx->ac++] = ft_strndup(ln + op->pos, op->len);
 	else
 		shvm_wordexp(&ctx->ac, ctx->av, ln + op->pos, op->len);
